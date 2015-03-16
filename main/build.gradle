@@ -44,6 +44,8 @@ android {
         renderscriptTargetApi rootProject.ext.targetSdkVersion
         renderscriptSupportModeEnabled true
 
+        applicationId 'com.example.actionlauncher.api.demo'
+
         versionName versionProps['name']
         versionCode versionProps['code'].toInteger()
     }
