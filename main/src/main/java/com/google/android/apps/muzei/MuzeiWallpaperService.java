@@ -28,6 +28,7 @@ import com.google.android.apps.muzei.event.ArtDetailOpenedClosedEvent;
 import com.google.android.apps.muzei.event.LockScreenVisibleChangedEvent;
 import com.google.android.apps.muzei.event.WallpaperActiveStateChangedEvent;
 import com.google.android.apps.muzei.event.WallpaperSizeChangedEvent;
+import com.google.android.apps.muzei.render.LocalRenderController;
 import com.google.android.apps.muzei.render.MuzeiBlurRenderer;
 import com.google.android.apps.muzei.render.RealRenderController;
 import com.google.android.apps.muzei.render.RenderController;
@@ -81,7 +82,7 @@ public class MuzeiWallpaperService extends GLWallpaperService {
             super.onCreate(surfaceHolder);
             mRenderer = new MuzeiBlurRenderer(MuzeiWallpaperService.this, this);
             mRenderer.setIsPreview(isPreview());
-            mRenderController = new RealRenderController(MuzeiWallpaperService.this,
+            mRenderController = new LocalRenderController(MuzeiWallpaperService.this,
                     mRenderer, this);
             setEGLContextClientVersion(2);
             setEGLConfigChooser(8, 8, 8, 0, 0, 0);
@@ -178,9 +179,8 @@ public class MuzeiWallpaperService extends GLWallpaperService {
                 queueEvent(new Runnable() {
                     @Override
                     public void run() {
-                        mRenderer.setIsBlurred(!mRenderer.isBlurred(), false);
-                        // Schedule a re-blur
-                        delayedBlur();
+                        // this triggers reloading of the next image
+                        mRenderController.reloadCurrentArtwork(true);
                     }
                 });
                 // Reset the flag

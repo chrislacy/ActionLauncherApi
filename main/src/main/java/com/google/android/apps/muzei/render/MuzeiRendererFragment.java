@@ -209,13 +209,7 @@ public class MuzeiRendererFragment extends Fragment implements
             setEGLConfigChooser(8, 8, 8, 8, 0, 0);
             setRenderer(mRenderer);
             setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
-            if (mDemoMode) {
-                mRenderController = new DemoRenderController(getContext(), mRenderer,
-                        MuzeiRendererFragment.this, mDemoFocus);
-            } else {
-                mRenderController = new RealRenderController(getContext(), mRenderer,
-                        MuzeiRendererFragment.this);
-            }
+            mRenderController = new LocalRenderController(getContext(), mRenderer, MuzeiRendererFragment.this);
             mRenderer.setDemoMode(mDemoMode);
             mRenderController.setVisible(true);
         }
