@@ -1,1 +1,1 @@
-include ':api', ':android-client-common', ':main'
+include ':api', ':main'

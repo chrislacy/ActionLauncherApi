@@ -125,5 +125,5 @@ dependencies {
 
     // :api is included as a transitive dependency from :android-client-common
     // compile project(':api')
-    compile project(':android-client-common')
+    // compile project(':android-client-common')
 }
