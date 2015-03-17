@@ -16,8 +16,8 @@
   -->
 
 <resources>
-    <string name="app_name">Simple LWP Demo</string>
-    <string name="app_description">Simple Live Wallpaper Demo</string>
+    <string name="app_name">LWP HW</string>
+    <string name="app_description">Android Live Wallpaper Hello World</string>
     <string name="app_summary">Based on Roman Nurik\'s Muzei.\n\nUsage: double tap empty space in your launcher to cycle through a few images.</string>
 
 

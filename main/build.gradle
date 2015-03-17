@@ -45,7 +45,7 @@ android {
         renderscriptTargetApi rootProject.ext.targetSdkVersion
         renderscriptSupportModeEnabled true
 
-        applicationId 'com.example.chrislacy.simplelivewallpaperdemo'
+        applicationId 'com.example.chrislacy.androidlivewallpaperhelloworld'
 
         versionName versionProps['name']
         versionCode versionProps['code'].toInteger()

@@ -1,5 +1,5 @@
-Simple Live Wallpaper Demo
-==========================
+Android Live Wallpaper Hello World
+==================================
 
 <img src="screenshot.png" width="300">
 
