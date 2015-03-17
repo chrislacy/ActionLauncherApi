@@ -49,5 +49,14 @@
                 android:resource="@xml/wallpaper" />
         </service>
 
+
+        <!-- New wallpaper notification receiver -->
+        <service android:name="com.actionlauncher.api.LiveWallpaperSource"
+            android:label="LiveWallpaperSource">
+            <intent-filter>
+                <action android:name="com.actionlauncher.api.action.LiveWallpaperSource" />
+            </intent-filter>
+        </service>
+
     </application>
 </manifest>

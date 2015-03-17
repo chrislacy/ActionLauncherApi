@@ -34,6 +34,7 @@ import android.util.DisplayMetrics;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
+import com.actionlauncher.api.LiveWallpaperSource;
 import com.google.android.apps.muzei.ArtDetailViewport;
 import com.google.android.apps.muzei.event.ArtworkSizeChangedEvent;
 import com.google.android.apps.muzei.event.SwitchingPhotosStateChangedEvent;
@@ -342,6 +343,7 @@ public class MuzeiBlurRenderer implements GLSurfaceView.Renderer {
                 rect.set(0, 0, originalWidth, originalHeight);
                 options.inSampleSize = ImageUtil.calculateSampleSize(originalHeight, 64);
                 Bitmap tempBitmap = bitmapRegionLoader.decodeRegion(rect, options);
+                LiveWallpaperSource.setBitmapSynchronous(mContext.getApplicationContext(), tempBitmap);
                 float darkness = ImageUtil.calculateDarkness(tempBitmap);
                 mDimAmount = mDemoMode
                         ? DEMO_DIM
