@@ -46,7 +46,6 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.google.android.apps.muzei.api.internal.ProtocolConstants.ACTION_HANDLE_COMMAND;
-import static com.google.android.apps.muzei.api.internal.ProtocolConstants.ACTION_NETWORK_AVAILABLE;
 import static com.google.android.apps.muzei.api.internal.ProtocolConstants.ACTION_PUBLISH_STATE;
 import static com.google.android.apps.muzei.api.internal.ProtocolConstants.ACTION_SUBSCRIBE;
 import static com.google.android.apps.muzei.api.internal.ProtocolConstants.EXTRA_COMMAND_ID;
@@ -363,14 +362,6 @@ public abstract class MuzeiArtSource extends IntentService {
     }
 
     /**
-     * Convenience callback method indicating that a network connection is now available. This
-     * will only be called if {@link #setWantsNetworkAvailable(boolean)} was last called with
-     * <code>true</code>.
-     */
-    protected void onNetworkAvailable() {
-    }
-
-    /**
      * Publishes the provided {@link Artwork} object. This will be sent to all current subscribers
      * and to all future subscribers, until a new artwork is published.
      */
@@ -442,19 +433,6 @@ public abstract class MuzeiArtSource extends IntentService {
      */
     protected final void removeAllUserCommands() {
         mCurrentState.setUserCommands((int[]) null);
-        mHandler.removeMessages(MSG_PUBLISH_CURRENT_STATE);
-        mHandler.sendEmptyMessage(MSG_PUBLISH_CURRENT_STATE);
-    }
-
-    /**
-     * Indicates that the source is interested (or no longer interested) in getting notified via
-     * {@link #onNetworkAvailable()} when a network connection becomes available.
-     *
-     * @param wantsNetworkAvailable Whether or not the source wants to be notified about network
-     *                              availability.
-     */
-    protected final void setWantsNetworkAvailable(boolean wantsNetworkAvailable) {
-        mCurrentState.setWantsNetworkAvailable(wantsNetworkAvailable);
         mHandler.removeMessages(MSG_PUBLISH_CURRENT_STATE);
         mHandler.sendEmptyMessage(MSG_PUBLISH_CURRENT_STATE);
     }
@@ -543,9 +521,6 @@ public abstract class MuzeiArtSource extends IntentService {
         } else if (ACTION_HANDLE_COMMAND.equals(action)) {
             int commandId = intent.getIntExtra(EXTRA_COMMAND_ID, 0);
             processHandleCommand(commandId, intent.getExtras());
-
-        } else if (ACTION_NETWORK_AVAILABLE.equals(action)) {
-            processNetworkAvailable();
         }
     }
 
@@ -640,10 +615,6 @@ public abstract class MuzeiArtSource extends IntentService {
         } else {
             onCustomCommand(commandId);
         }
-    }
-
-    private void processNetworkAvailable() {
-        onNetworkAvailable();
     }
 
     private void setUpdateAlarm(long nextTimeMillis) {

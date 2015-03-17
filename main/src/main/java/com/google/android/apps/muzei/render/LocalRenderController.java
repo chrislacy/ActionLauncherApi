@@ -16,14 +16,10 @@
 
 package com.google.android.apps.muzei.render;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.google.android.apps.muzei.util.LogUtil;
 

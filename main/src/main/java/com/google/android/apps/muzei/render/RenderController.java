@@ -21,11 +21,6 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
-import com.google.android.apps.muzei.event.BlurAmountChangedEvent;
-import com.google.android.apps.muzei.event.DimAmountChangedEvent;
-import com.google.android.apps.muzei.event.GreyAmountChangedEvent;
-
-import de.greenrobot.event.EventBus;
 
 public abstract class RenderController {
     protected Context mContext;
@@ -38,29 +33,12 @@ public abstract class RenderController {
         mRenderer = renderer;
         mContext = context;
         mCallbacks = callbacks;
-        EventBus.getDefault().register(this);
     }
 
     public void destroy() {
         if (mQueuedBitmapRegionLoader != null) {
             mQueuedBitmapRegionLoader.destroy();
         }
-        EventBus.getDefault().unregister(this);
-    }
-
-    public void onEventMainThread(BlurAmountChangedEvent e) {
-        mRenderer.recomputeMaxPrescaledBlurPixels();
-        throttledForceReloadCurrentArtwork();
-    }
-
-    public void onEventMainThread(DimAmountChangedEvent e) {
-        mRenderer.recomputeMaxDimAmount();
-        throttledForceReloadCurrentArtwork();
-    }
-
-    public void onEventMainThread(GreyAmountChangedEvent e) {
-        mRenderer.recomputeGreyAmount();
-        throttledForceReloadCurrentArtwork();
     }
 
     private void throttledForceReloadCurrentArtwork() {

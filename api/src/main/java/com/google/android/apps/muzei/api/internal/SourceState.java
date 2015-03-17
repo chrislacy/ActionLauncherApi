@@ -35,7 +35,6 @@ import java.util.List;
 public class SourceState {
     private Artwork mCurrentArtwork;
     private String mDescription;
-    private boolean mWantsNetworkAvailable;
     private List<UserCommand> mUserCommands = new ArrayList<>();
 
     public Artwork getCurrentArtwork() {
@@ -44,10 +43,6 @@ public class SourceState {
 
     public String getDescription() {
         return mDescription;
-    }
-
-    public boolean getWantsNetworkAvailable() {
-        return mWantsNetworkAvailable;
     }
 
     public int getNumUserCommands() {
@@ -64,10 +59,6 @@ public class SourceState {
 
     public void setDescription(String description) {
         mDescription = description;
-    }
-
-    public void setWantsNetworkAvailable(boolean wantsNetworkAvailable) {
-        mWantsNetworkAvailable = wantsNetworkAvailable;
     }
 
     public void setUserCommands(int... userCommands) {
@@ -101,7 +92,6 @@ public class SourceState {
             bundle.putBundle("currentArtwork", mCurrentArtwork.toBundle());
         }
         bundle.putString("description", mDescription);
-        bundle.putBoolean("wantsNetworkAvailable", mWantsNetworkAvailable);
         String[] commandsSerialized = new String[mUserCommands.size()];
         for (int i = 0; i < commandsSerialized.length; i++) {
             commandsSerialized[i] = mUserCommands.get(i).serialize();
@@ -117,7 +107,6 @@ public class SourceState {
             state.mCurrentArtwork = Artwork.fromBundle(artworkBundle);
         }
         state.mDescription = bundle.getString("description");
-        state.mWantsNetworkAvailable = bundle.getBoolean("wantsNetworkAvailable");
         String[] commandsSerialized = bundle.getStringArray("userCommands");
         if (commandsSerialized != null && commandsSerialized.length > 0) {
             for (String s : commandsSerialized) {
@@ -133,7 +122,6 @@ public class SourceState {
             jsonObject.put("currentArtwork", mCurrentArtwork.toJson());
         }
         jsonObject.put("description", mDescription);
-        jsonObject.put("wantsNetworkAvailable", mWantsNetworkAvailable);
         JSONArray commandsSerialized = new JSONArray();
         for (UserCommand command : mUserCommands) {
             commandsSerialized.put(command.serialize());
@@ -148,7 +136,6 @@ public class SourceState {
             mCurrentArtwork = Artwork.fromJson(artworkJsonObject);
         }
         mDescription = jsonObject.optString("description");
-        mWantsNetworkAvailable = jsonObject.optBoolean("wantsNetworkAvailable");
         mUserCommands.clear();
         JSONArray commandsSerialized = jsonObject.optJSONArray("userCommands");
         if (commandsSerialized != null && commandsSerialized.length() > 0) {

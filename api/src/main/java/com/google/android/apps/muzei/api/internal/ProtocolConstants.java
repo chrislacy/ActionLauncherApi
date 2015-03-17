@@ -29,8 +29,6 @@ public class ProtocolConstants {
     public static final String EXTRA_COMMAND_ID = "com.google.android.apps.muzei.api.extra.COMMAND_ID";
     public static final String EXTRA_SCHEDULED = "com.google.android.apps.muzei.api.extra.SCHEDULED";
 
-    public static final String ACTION_NETWORK_AVAILABLE = "com.google.android.apps.muzei.api.action.NETWORK_AVAILABLE";
-
     // Sent intents
     public static final String ACTION_PUBLISH_STATE = "com.google.android.apps.muzei.api.action.PUBLISH_UPDATE";
     public static final String EXTRA_STATE = "com.google.android.apps.muzei.api.extra.STATE";
