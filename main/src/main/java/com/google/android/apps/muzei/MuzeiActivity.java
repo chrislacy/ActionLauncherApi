@@ -255,12 +255,7 @@ public class MuzeiActivity extends ActionBarActivity {
     }
 
     private void updateArtDetailUi() {
-        mTitleView.setText("Action 3 live wallpaper demo");
-
-        if (mWallpaperActive != null) {
-            mBylineView.setText(mWallpaperActive ? "Load Action 3 (you need Plus upgrade) and double-tap empty space"
-                    : "To use, first set this app as the current wallpaper (Activate -> Set wallpaper).");
-        }
+        mTitleView.setText(R.string.app_description);
     }
 
     @Override

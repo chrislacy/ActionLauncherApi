@@ -1,4 +1,5 @@
 /*
+ * Copyright 2015 Chris Lacy
  * Copyright 2014 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,7 +45,7 @@ android {
         renderscriptTargetApi rootProject.ext.targetSdkVersion
         renderscriptSupportModeEnabled true
 
-        applicationId 'com.example.actionlauncher.api.demo'
+        applicationId 'com.example.chrislacy.simplelivewallpaperdemo'
 
         versionName versionProps['name']
         versionCode versionProps['code'].toInteger()
