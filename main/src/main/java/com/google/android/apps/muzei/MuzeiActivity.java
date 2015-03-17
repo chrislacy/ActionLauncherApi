@@ -257,7 +257,10 @@ public class MuzeiActivity extends ActionBarActivity {
 
     private void updateArtDetailUi() {
         mTitleView.setText(R.string.app_description);
-        mBylineView.setText(R.string.app_summary);
+        if (mWallpaperActive != null) {
+            mBylineView.setText(mWallpaperActive ? R.string.app_summary_is_default
+                    : R.string.app_summary_is_not_default);
+        }
     }
 
     @Override

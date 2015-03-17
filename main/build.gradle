@@ -45,7 +45,7 @@ android {
         renderscriptTargetApi rootProject.ext.targetSdkVersion
         renderscriptSupportModeEnabled true
 
-        applicationId 'com.example.chrislacy.androidlivewallpaperhelloworld'
+        applicationId 'com.example.actionlauncher.api.livewallpaperdemo'
 
         versionName versionProps['name']
         versionCode versionProps['code'].toInteger()
@@ -123,4 +123,5 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:recyclerview-v7:21.0.2'
+    compile project(':api')
 }

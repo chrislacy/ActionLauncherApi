@@ -16,9 +16,10 @@
   -->
 
 <resources>
-    <string name="app_name">LWP HW</string>
-    <string name="app_description">Android Live Wallpaper Hello World</string>
-    <string name="app_summary">Based on Roman Nurik\'s Muzei.\n\nUsage: double tap empty space in your launcher to cycle through a few images.</string>
+    <string name="app_name">Action3 API</string>
+    <string name="app_description">Action 3 Live Wallpaper Demo</string>
+    <string name="app_summary_is_default">Load Action 3 (you need Plus upgrade) and double-tap empty space</string>
+    <string name="app_summary_is_not_default">To use, first set this app as the current wallpaper (Activate -> Set wallpaper).</string>
 
 
     <string name="action_activate">Activate</string>
