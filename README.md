@@ -1,19 +1,29 @@
-Muzei Live Wallpaper
-====================
+Simple Live Wallpaper Demo
+==========================
 
-<img src="http://api.muzei.co/static/hero.jpg" width="400" align="right" hspace="20">
+<img src="screenshot.png" width="300">
 
-*A living museum for your Android home screen.*
+A "Hello World" app that can be referened when creating a live wallpaper application for Android.
 
-Muzei is a live wallpaper that gently refreshes your home screen each day with famous works of art. It also recedes into the background, blurring and dimming artwork to keep your icons and widgets in the spotlight. Simply double touch the wallpaper or open the Muzei app to enjoy and explore the artwork in its full glory.
+This app is just a barebones version of Roman Nurki's [Muzei][1] that cycles between a few images included in the APK. Do check out Muzei if you want something more advanced.
 
-Alternatively, you can choose your favorite photos from your own gallery or other apps to use on your home screen. To keep your wallpaper fresh, Muzei will rotate through your favorite photos every few hours.
 
-**[Install on Google Play](https://play.google.com/store/apps/details?id=net.nurik.roman.muzei)**
+License
+=======
 
-Muzei API
-=========
+    Copyright 2015 Chris Lacy
+    Copyright 2014 Google Inc.
 
-Muzei offers a simple API that allows you to build your own wallpaper source.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-**[Read the API docs](http://api.muzei.co)**&nbsp;&nbsp;•&nbsp;&nbsp;**[Check out the 500px example source](https://github.com/romannurik/muzei/tree/master/example-source-500px)**
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+[1]: https://github.com/romannurik/muzei/
