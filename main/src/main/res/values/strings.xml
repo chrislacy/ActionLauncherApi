@@ -16,8 +16,9 @@
   -->
 
 <resources>
-    <string name="app_name">Simple Live Wallpaper Demo</string>
+    <string name="app_name">Simple LWP Demo</string>
     <string name="app_description">Simple Live Wallpaper Demo</string>
+    <string name="app_summary">Based on Roman Nurik\'s Muzei.\n\nUsage: double tap empty space in your launcher to cycle through a few images.</string>
 
 
     <string name="action_activate">Activate</string>

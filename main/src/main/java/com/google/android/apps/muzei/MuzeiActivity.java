@@ -257,6 +257,7 @@ public class MuzeiActivity extends ActionBarActivity {
 
     private void updateArtDetailUi() {
         mTitleView.setText(R.string.app_description);
+        mBylineView.setText(R.string.app_summary);
     }
 
     @Override
