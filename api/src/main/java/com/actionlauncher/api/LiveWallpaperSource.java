@@ -159,6 +159,8 @@ public class LiveWallpaperSource extends IntentService {
     /**
      * Publishes the provided {@link LiveWallpaperInfo} object. This will be sent to all current subscribers
      * and to all future subscribers, until a new item is published.
+     *
+     * @param liveWallpaperInfo the LiveWallpaperInfo to publish
      */
     protected final void publishLiveWallpaperInfo(LiveWallpaperInfo liveWallpaperInfo) {
         mCurrentState.setCurrentLiveWallpaperInfo(liveWallpaperInfo);
@@ -169,6 +171,8 @@ public class LiveWallpaperSource extends IntentService {
     /**
      * Returns the most recently {@linkplain #publishLiveWallpaperInfo(LiveWallpaperInfo) published} item, or null
      * if none has been published.
+     *
+     * @return the current LiveWallpaperInfo (if one exists).
      */
     protected final LiveWallpaperInfo getCurrentLiveWallpaperInfo() {
         return mCurrentState != null ? mCurrentState.getCurrentLiveWallpaperInfo() : null;
@@ -179,6 +183,8 @@ public class LiveWallpaperSource extends IntentService {
      *
      * @see #onEnabled()
      * @see #onDisabled()
+     *
+     * @return true if enabled.
      */
     protected synchronized final boolean isEnabled() {
         return mSubscriptions.size() > 0;
@@ -200,8 +206,6 @@ public class LiveWallpaperSource extends IntentService {
 
     /**
      * Convenience method for accessing preferences specific to the source.
-     *
-     * @see #getSharedPreferences(android.content.Context, String)
      */
     protected final SharedPreferences getSharedPreferences() {
         return getSharedPreferences(this, mName);
@@ -408,6 +412,8 @@ public class LiveWallpaperSource extends IntentService {
      * @param context (required) A Context. Used to call Context.startService().
      * @param bitmap (required) A Bitmap of the current wallpaper. Note that the Palette system
      *               automatically resizes this before processing so you don't have to.
+     *
+     * @return true if a palette was generated and the LiveWallpaperSource Service was started.
      */
     public static boolean setBitmapSynchronous(Context context, Bitmap bitmap) {
         Log.d(TAG, "setBitmapSynchronous()");
