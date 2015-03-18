@@ -26,7 +26,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * A serializable object representing a single artwork produced by a {@link LiveWallpaperSource}.
+ * A serializable object representing a single LiveWallpaperInfo item produced by
+ * a {@link LiveWallpaperSource}.
  *
  * <p> To create an instance, use the {@link LiveWallpaperInfo.Builder} class.
  */
@@ -77,7 +78,7 @@ public class LiveWallpaperInfo {
     }
 
     /**
-     * Returns the artwork's opaque application-specific identifier, or null if it doesn't have
+     * Returns the LiveWallpaperInfo's opaque application-specific identifier, or null if it doesn't have
      * one.
      *
      * @see LiveWallpaperInfo.Builder#token(String)
@@ -160,7 +161,7 @@ public class LiveWallpaperInfo {
         }
 
         /**
-         * Sets the artwork's opaque application-specific identifier.
+         * Sets the LiveWallpaperInfo's opaque application-specific identifier.
          */
         public Builder token(String token) {
             mLiveWallpaperInfo.mToken = token;
@@ -429,7 +430,7 @@ public class LiveWallpaperInfo {
     }
 
     /**
-     * Serializes this artwork object to a {@link Bundle} representation.
+     * Serializes this liveWallpaperInfo object to a {@link Bundle} representation.
      */
     public Bundle toBundle() {
         Bundle bundle = new Bundle();
@@ -474,7 +475,7 @@ public class LiveWallpaperInfo {
     }
 
     /**
-     * Deserializes an artwork object from a {@link Bundle}.
+     * Deserializes an liveWallpaperInfo object from a {@link Bundle}.
      */
     public static LiveWallpaperInfo fromBundle(Bundle bundle) {
         Builder builder = new Builder()
@@ -504,7 +505,7 @@ public class LiveWallpaperInfo {
     }
 
     /**
-     * Serializes this artwork object to a {@link JSONObject} representation.
+     * Serializes this liveWallpaperInfo object to a {@link JSONObject} representation.
      */
     public JSONObject toJson() throws JSONException {
         JSONObject jsonObject = new JSONObject();
@@ -549,7 +550,7 @@ public class LiveWallpaperInfo {
     }
 
     /**
-     * Deserializes an artwork object from a {@link JSONObject}.
+     * Deserializes an liveWallpaperInfo object from a {@link JSONObject}.
      */
     public static LiveWallpaperInfo fromJson(JSONObject jsonObject) throws JSONException {
         return new Builder()

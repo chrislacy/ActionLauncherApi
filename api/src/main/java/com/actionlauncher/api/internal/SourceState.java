@@ -15,12 +15,12 @@ public class SourceState {
 
     private LiveWallpaperInfo mCurrentLiveWallpaperInfo;
 
-    public LiveWallpaperInfo getCurrentArtwork() {
+    public LiveWallpaperInfo getCurrentLiveWallpaperInfo() {
         return mCurrentLiveWallpaperInfo;
     }
 
-    public void setCurrentLiveWallpaperInfo(LiveWallpaperInfo artwork) {
-        mCurrentLiveWallpaperInfo = artwork;
+    public void setCurrentLiveWallpaperInfo(LiveWallpaperInfo liveWallpaperInfo) {
+        mCurrentLiveWallpaperInfo = liveWallpaperInfo;
     }
 
     public Bundle toBundle() {
@@ -33,9 +33,9 @@ public class SourceState {
 
     public static SourceState fromBundle(Bundle bundle) {
         SourceState state = new SourceState();
-        Bundle artworkBundle = bundle.getBundle(KEY_CURRENT_LIVE_WALLPAPER_INFO);
-        if (artworkBundle != null) {
-            state.mCurrentLiveWallpaperInfo = LiveWallpaperInfo.fromBundle(artworkBundle);
+        Bundle liveWallpaperInfoBundle = bundle.getBundle(KEY_CURRENT_LIVE_WALLPAPER_INFO);
+        if (liveWallpaperInfoBundle != null) {
+            state.mCurrentLiveWallpaperInfo = LiveWallpaperInfo.fromBundle(liveWallpaperInfoBundle);
         }
         return state;
     }
@@ -49,9 +49,9 @@ public class SourceState {
     }
 
     public void readJson(JSONObject jsonObject) throws JSONException {
-        JSONObject artworkJsonObject = jsonObject.optJSONObject(KEY_CURRENT_LIVE_WALLPAPER_INFO);
-        if (artworkJsonObject != null) {
-            mCurrentLiveWallpaperInfo = LiveWallpaperInfo.fromJson(artworkJsonObject);
+        JSONObject liveWallpaperInfoObject = jsonObject.optJSONObject(KEY_CURRENT_LIVE_WALLPAPER_INFO);
+        if (liveWallpaperInfoObject != null) {
+            mCurrentLiveWallpaperInfo = LiveWallpaperInfo.fromJson(liveWallpaperInfoObject);
         }
     }
 

@@ -158,20 +158,20 @@ public class LiveWallpaperSource extends IntentService {
 
     /**
      * Publishes the provided {@link LiveWallpaperInfo} object. This will be sent to all current subscribers
-     * and to all future subscribers, until a new artwork is published.
+     * and to all future subscribers, until a new item is published.
      */
-    protected final void publishLiveWallpaperInfo(LiveWallpaperInfo artwork) {
-        mCurrentState.setCurrentLiveWallpaperInfo(artwork);
+    protected final void publishLiveWallpaperInfo(LiveWallpaperInfo liveWallpaperInfo) {
+        mCurrentState.setCurrentLiveWallpaperInfo(liveWallpaperInfo);
         mHandler.removeMessages(MSG_PUBLISH_CURRENT_STATE);
         mHandler.sendEmptyMessage(MSG_PUBLISH_CURRENT_STATE);
     }
 
     /**
-     * Returns the most recently {@linkplain #publishLiveWallpaperInfo(LiveWallpaperInfo) published} artwork, or null
+     * Returns the most recently {@linkplain #publishLiveWallpaperInfo(LiveWallpaperInfo) published} item, or null
      * if none has been published.
      */
-    protected final LiveWallpaperInfo getCurrentArtwork() {
-        return mCurrentState != null ? mCurrentState.getCurrentArtwork() : null;
+    protected final LiveWallpaperInfo getCurrentLiveWallpaperInfo() {
+        return mCurrentState != null ? mCurrentState.getCurrentLiveWallpaperInfo() : null;
     }
 
     /**
@@ -290,7 +290,7 @@ public class LiveWallpaperSource extends IntentService {
         Log.d(TAG, "processAndDispatchSubscriberAdded():" + subscriber
                 + ", mSubscriptions.size():" + mSubscriptions.size());
 
-        // If there's no artwork, trigger initial update
+        // If there's no LiveWallpaperInfo, trigger initial update
         //if (mSubscriptions.size() == 1
         //        && mLiveWallpaperInfo == null) {
         //    // TODO: Broadcast that we need a palette
