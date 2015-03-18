@@ -26,6 +26,14 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * This class is a copy of API 22's Palette library from Support Library. It has been integrated
+ * directly into the ActionLauncherApi project because:
+ *   - Many live-wallpaper developers are still using Eclipse, which has seemingly isn't well set
+ *   up to use AARs.
+ *   - Makes the dependencies easier.
+ *   - It doesn't take much code size.
+ *
+ *
  * A helper class to extract prominent colors from an image.
  * <p>
  * A number of colors with different profiles are extracted from the image:

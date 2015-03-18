@@ -401,6 +401,14 @@ public class LiveWallpaperSource extends IntentService {
     }
 
 
+    /**
+     * Static helper function that generates an ActionPalette from the supplied Bitmap, and then
+     * begins the process of transferring this palette information to Action Launcher.
+     *
+     * @param context (required) A Context. Used to call Context.startService().
+     * @param bitmap (required) A Bitmap of the current wallpaper. Note that the Palette system
+     *               automatically resizes this before processing so you don't have to.
+     */
     public static boolean setBitmapSynchronous(Context context, Bitmap bitmap) {
         Log.d(TAG, "setBitmapSynchronous()");
 
