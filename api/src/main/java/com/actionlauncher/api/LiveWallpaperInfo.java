@@ -477,7 +477,7 @@ public class LiveWallpaperInfo {
      * Deserializes an liveWallpaperInfo object from a {@link Bundle}.
      */
     public static LiveWallpaperInfo fromBundle(Bundle bundle) {
-        Builder builder = new Builder()
+        return new Builder()
                 .token(bundle.getString(KEY_TOKEN))
                 .paletteVibrantRgb(bundle.getString(KEY_PALETTE_VIBRANT_RGB, null))
                 .paletteVibrantTitleTextRgb(bundle.getString(KEY_PALETTE_VIBRANT_TITLE_TEXT, null))
@@ -496,11 +496,8 @@ public class LiveWallpaperInfo {
                 .paletteLightMutedBodyTextRgb(bundle.getString(KEY_PALETTE_LIGHT_MUTED_BODY_TEXT, null))
                 .paletteDarkMutedRgb(bundle.getString(KEY_PALETTE_DARK_MUTED_RGB, null))
                 .paletteDarkMutedTitleTextRgb(bundle.getString(KEY_PALETTE_DARK_MUTED_TITLE_TEXT, null))
-                .paletteDarkMutedBodyTextRgb(bundle.getString(KEY_PALETTE_DARK_MUTED_BODY_TEXT, null));
-
-        LiveWallpaperInfo result = builder.build();
-        Log.d(TAG, "LiveWallpaperInfo.fromBundle() " + result.toString());
-        return result;
+                .paletteDarkMutedBodyTextRgb(bundle.getString(KEY_PALETTE_DARK_MUTED_BODY_TEXT, null))
+                .build();
     }
 
     /**

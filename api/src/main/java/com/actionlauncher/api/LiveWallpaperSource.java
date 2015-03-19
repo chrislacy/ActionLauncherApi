@@ -55,6 +55,7 @@ import static com.actionlauncher.api.internal.ProtocolConstants.EXTRA_TOKEN;
  */
 public class LiveWallpaperSource extends IntentService {
     private static final String TAG = "Action3-api";
+    private static boolean LOGGING_ENABLED = false;
 
     /**
      * The {@link Intent} action representing an Action Launcher live wallpaper source. This service
@@ -218,7 +219,7 @@ public class LiveWallpaperSource extends IntentService {
         }
 
         String action = intent.getAction();
-        Log.d(TAG, "LiveWallpaperSource.onHandleIntent() - action:" + action + ", id:" + mName);
+        LOGD("LiveWallpaperSource.onHandleIntent() - action:" + action + ", id:" + mName);
         // TODO: permissions?
         if (ACTION_SUBSCRIBE.equals(action)) {
             processSubscribe(
@@ -231,7 +232,9 @@ public class LiveWallpaperSource extends IntentService {
             if (intent.hasExtra(EXTRA_LIVE_WALLPAPER_INFO)) {
                 Bundle bundle = intent.getExtras().getBundle(EXTRA_LIVE_WALLPAPER_INFO);
                 if (bundle != null) {
-                    mCurrentState.setCurrentLiveWallpaperInfo(LiveWallpaperInfo.fromBundle(bundle));
+                    LiveWallpaperInfo info = LiveWallpaperInfo.fromBundle(bundle);
+                    mCurrentState.setCurrentLiveWallpaperInfo(info);
+                    LOGD("LiveWallpaperInfo.fromBundle():" + (info != null ? info.toString() : null));
                     wallpaperInfoSet = true;
                 }
             }
@@ -243,14 +246,14 @@ public class LiveWallpaperSource extends IntentService {
     }
 
     public void publishCurrentPalette() {
-        Log.d(TAG, "publishCurrentPalette()");
+        LOGD("publishCurrentPalette()");
         mHandler.removeMessages(MSG_PUBLISH_CURRENT_STATE);
         mHandler.sendEmptyMessage(MSG_PUBLISH_CURRENT_STATE);
     }
 
     private synchronized void processSubscribe(ComponentName subscriber, String token) {
         if (subscriber == null) {
-            Log.w(TAG, "No subscriber given.");
+            LOGD("No subscriber given.");
             return;
         }
 
@@ -291,7 +294,7 @@ public class LiveWallpaperSource extends IntentService {
 
         onSubscriberAdded(subscriber);
 
-        Log.d(TAG, "processAndDispatchSubscriberAdded():" + subscriber
+        LOGD("processAndDispatchSubscriberAdded():" + subscriber
                 + ", mSubscriptions.size():" + mSubscriptions.size());
 
         // If there's no LiveWallpaperInfo, trigger initial update
@@ -310,7 +313,7 @@ public class LiveWallpaperSource extends IntentService {
         if (mSubscriptions.size() == 0) {
             onDisabled();
         }
-        Log.d(TAG, "processAndDispatchSubscriberRemoved():" + subscriber
+        LOGD("processAndDispatchSubscriberRemoved():" + subscriber
                 + ", mSubscriptions.size():" + mSubscriptions.size());
     }
 
@@ -323,7 +326,7 @@ public class LiveWallpaperSource extends IntentService {
     private synchronized void publishCurrentState(final ComponentName subscriber) {
         String token = mSubscriptions.get(subscriber);
         if (TextUtils.isEmpty(token)) {
-            Log.w(TAG, "Not active, canceling update, id=" + mName);
+            LOGD("Not active, canceling update, id=" + mName);
             return;
         }
 
@@ -335,7 +338,7 @@ public class LiveWallpaperSource extends IntentService {
         try {
             ComponentName returnedSubscriber = startService(intent);
             if (returnedSubscriber == null) {
-                Log.e(TAG, "Update wasn't published because subscriber no longer exists"
+                LOGE("Update wasn't published because subscriber no longer exists"
                         + ", id=" + mName);
                 // Unsubscribe the now-defunct subscriber
                 mHandler.post(new Runnable() {
@@ -345,11 +348,11 @@ public class LiveWallpaperSource extends IntentService {
                     }
                 });
             } else {
-                Log.d(TAG, "publishCurrentState(): successfully started service "
+                LOGD("publishCurrentState(): successfully started service "
                         + returnedSubscriber.toString() + " with intent " + intent.toString());
             }
         } catch (SecurityException e) {
-            Log.e(TAG, "Couldn't publish update, id=" + mName, e);
+            LOGE("Couldn't publish update, id=" + mName, e);
         }
     }
 
@@ -382,7 +385,7 @@ public class LiveWallpaperSource extends IntentService {
                 mCurrentState = SourceState.fromJson((JSONObject)
                         new JSONTokener(stateString).nextValue());
             } catch (JSONException e) {
-                Log.e(TAG, "Couldn't deserialize current state, id=" + mName, e);
+                LOGE("Couldn't deserialize current state, id=" + mName, e);
             }
         } else {
             mCurrentState = new SourceState();
@@ -393,9 +396,9 @@ public class LiveWallpaperSource extends IntentService {
         try {
             String state = mCurrentState.toJson().toString();
             mSharedPrefs.edit().putString(PREF_STATE, state).commit();
-            Log.d(TAG, "saveState() - " + state);
+            LOGD("saveState() - " + state);
         } catch (JSONException e) {
-            Log.e(TAG, "Couldn't serialize current state, id=" + mName, e);
+            LOGE("Couldn't serialize current state, id=" + mName, e);
         }
     }
 
@@ -416,13 +419,13 @@ public class LiveWallpaperSource extends IntentService {
      * @return true if a palette was generated and the LiveWallpaperSource Service was started.
      */
     public static boolean setBitmapSynchronous(Context context, Bitmap bitmap) {
-        Log.d(TAG, "setBitmapSynchronous()");
+        LOGD("setBitmapSynchronous()");
 
         ActionPalette actionPalette;
         try {
             actionPalette = ActionPalette.from(bitmap).generate();
         } catch (OutOfMemoryError ex) {
-            Log.e(TAG, "OutOfMemoryError fetching palette info. Consider passing a smaller sized Bitmap as input", ex);
+            LOGE("OutOfMemoryError fetching palette info. Consider passing a smaller sized Bitmap as input", ex);
             return false;
         }
 
@@ -436,12 +439,42 @@ public class LiveWallpaperSource extends IntentService {
                 .putExtra("dummy", System.currentTimeMillis());
         try {
             ComponentName result = context.startService(serviceIntent);
-            Log.d(TAG, "startService() result:" + result);
+            LOGD("startService() result:" + result);
             return result != null;
         } catch (Exception ex) {
-            Log.e(TAG, "Error starting service with intent:" + serviceIntent
+            LOGE("Error starting service with intent:" + serviceIntent
                     + "\n" + ex.getLocalizedMessage(), ex);
         }
         return false;
     }
+
+    /**
+     * Static helper function that enables logs
+     *
+     * @param enabled whether to output logs
+     */
+    public static void enableLogging(boolean enabled) {
+        LOGGING_ENABLED = enabled;
+    }
+
+    static void LOGD(String msg) {
+        LOGD(msg, null);
+    }
+
+    static void LOGD(String msg, Throwable throwable) {
+        if (LOGGING_ENABLED) {
+            Log.d(TAG, msg, throwable);
+        }
+    }
+
+    static void LOGE(String msg) {
+        LOGE(msg, null);
+    }
+
+    static void LOGE(String msg, Throwable throwable) {
+        if (LOGGING_ENABLED) {
+            Log.e(TAG, msg, throwable);
+        }
+    }
+
 }
