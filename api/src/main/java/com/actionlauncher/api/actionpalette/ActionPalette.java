@@ -81,8 +81,8 @@ public final class ActionPalette {
         void onGenerated(ActionPalette actionPalette);
     }
 
-    private static final int DEFAULT_RESIZE_BITMAP_MAX_DIMENSION = 192;
-    private static final int DEFAULT_CALCULATE_NUMBER_COLORS = 16;
+    public static final int DEFAULT_RESIZE_BITMAP_MAX_DIMENSION = 192;
+    public static final int DEFAULT_CALCULATE_NUMBER_COLORS = 16;
 
     private static final float MIN_CONTRAST_TITLE_TEXT = 3.0f;
     private static final float MIN_CONTRAST_BODY_TEXT = 4.5f;
