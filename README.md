@@ -14,7 +14,7 @@ Usage
 
 1. Integrate the Action 3 API code into the `dependencies` section of your `build.gradle` file:
 	
-	`compile 'com.actionlauncher:action3-api:1.1.0'`
+	`compile 'com.actionlauncher:action3-api:1.+'`
   <br><br>If you're not using Android Studio/gradle, you can add the [`action3-api.jar`][5] to your `/libs` folder, or copy the API [code][3] directly into your project.<br><br>
 
 
