@@ -34,8 +34,8 @@ Usage
     ```
     Bitmap myBitmap = ...
     try {
-        LiveWallpaperSource.with(mContext)
-            .setBitmapSynchronous(tempBitmap)
+        LiveWallpaperSource.with(context)
+            .setBitmapSynchronous(myBitmap)
             .run();
     } catch (OutOfMemoryError outOfMemoryError) {
         // Palette generation was unable to process the Bitmap passed in to
