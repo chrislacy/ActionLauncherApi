@@ -62,7 +62,7 @@ Demo
 ====
 The `main` app in this repository demonstrates the live wallpaper functionality. It is basically the main app from the [Android Live Wallpaper Hello World project](1). If you double-tap empty space on Action Launcher 3's home screen, the wallpaper image will change, and you items such as the search bar will have their colors updated as per the current wallpaper image in Action Launcher 3.
 
-Check out the `LiveWallpaperSource.setBitmapSynchronous()` call in `MuzeiBlurRenderer.java`.
+Check out the `LiveWallpaperSource.with()` call in `MuzeiBlurRenderer.java`.
 
 Notes
 =====
