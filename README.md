@@ -14,8 +14,8 @@ Usage
 
 1. Integrate the Action 3 API code into the `dependencies` section of your `build.gradle` file:
 	
-	`compile 'com.actionlauncher:action3-api:1.0.1'`
-  <br><br>If you're not using gradle, you can add the `action3-api-1.0.1jar` to your `/libs` folder, or copy the API [code][3] directly into your project.<br><br>
+	`compile 'com.actionlauncher:action3-api:1.1.0'`
+  <br><br>If you're not using Android Studio/gradle, you can add the [`action3-api.jar`][5] to your `/libs` folder, or copy the API [code][3] directly into your project.<br><br>
 
 
 2. Add this code to your `AndroidManifest.xml` (inside the `Application` entry):
@@ -33,7 +33,19 @@ Usage
 
     ```
     Bitmap myBitmap = ...
-    LiveWallpaperSource.setBitmapSynchronous(context, myBitmap);
+    try {
+        LiveWallpaperSource.with(mContext)
+            .setBitmapSynchronous(tempBitmap)
+            .run();
+    } catch (OutOfMemoryError outOfMemoryError) {
+        // Palette generation was unable to process the Bitmap passed in to
+        // setBitmapSynchronous(). Consider using a smaller image.
+        // See ActionPalette.DEFAULT_RESIZE_BITMAP_MAX_DIMENSION
+    } catch (IllegalArgumentException illegalArgumentEx) {
+        // Raised during palette generation. Check your Bitmap.
+    } catch (IllegalStateException illegalStateException) {
+        // Raised during palette generation. Check your Bitmap.
+    }
     ```
 
 
@@ -43,6 +55,7 @@ Usage
  * Load Action Launcher 3 (you *must* be using version 3.3 or later).
 * Ensure your wallpaper is set as the live wallpaper.
 * Ensure Action Launcher's wallpaper extraction mode is enabled (Settings -> Quicktheme -> Theme -> Wallpaper).
+* As you're integrating the API, be sure to turn on Settings -> Help -> Advanced -> Live wallpaper API debug in Action Launcher 3. By doing so, you will enable a debug mode where pressing the voice search button on the search bar will trigger a request to your app for the latest `LiveWallpaperInfo` data.
 
 
 Demo
@@ -90,3 +103,4 @@ License
 [2]: https://play.google.com/store/apps/details?id=com.actionlauncher.playstore
 [3]: https://github.com/chrislacy/ActionLauncherApi/tree/master/api/src/main/java
 [4]: https://github.com/chrislacy/ActionLauncherApi/tree/master/api/src/main/java/com/actionlauncher/api/actionpalette
+[5]: https://oss.sonatype.org/content/repositories/releases/com/actionlauncher/action3-api/1.1.0/action3-api-1.1.0.jar

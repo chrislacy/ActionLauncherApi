@@ -22,7 +22,7 @@ apply plugin: 'java'
 
 jar.baseName = 'action3-api'
 group = 'com.actionlauncher'
-version = '1.0.1'
+version = '1.1.0'
 
 def Properties props = new Properties()
 props.load(new FileInputStream(file('../local.properties')))

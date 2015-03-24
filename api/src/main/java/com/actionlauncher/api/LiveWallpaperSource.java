@@ -407,56 +407,6 @@ public class LiveWallpaperSource extends IntentService {
         return null;
     }
 
-
-    /**
-     * Static helper function that generates an ActionPalette from the supplied Bitmap, and then
-     * begins the process of transferring this palette information to Action Launcher.
-     *
-     * @param context (required) A Context. Used to call Context.startService().
-     * @param bitmap (required) A Bitmap of the current wallpaper. Note that the Palette system
-     *               automatically resizes this before processing so you don't have to.
-     *
-     * @return true if a palette was generated and the LiveWallpaperSource Service was started.
-     */
-    public static boolean setBitmapSynchronous(Context context, Bitmap bitmap) {
-        LOGD("setBitmapSynchronous()");
-
-        ActionPalette actionPalette;
-        try {
-            actionPalette = ActionPalette.from(bitmap).generate();
-        } catch (OutOfMemoryError ex) {
-            LOGE("OutOfMemoryError fetching palette info. Consider passing a smaller sized Bitmap as input", ex);
-            return false;
-        }
-
-        Intent serviceIntent = new Intent(context, LiveWallpaperSource.class)
-                .setAction(ProtocolConstants.ACTION_PUBLISH_STATE)
-                .putExtra(EXTRA_LIVE_WALLPAPER_INFO, (actionPalette == null) ? null :
-                        new LiveWallpaperInfo.Builder()
-                                .palette(actionPalette)
-                                .build()
-                                .toBundle())
-                .putExtra("dummy", System.currentTimeMillis());
-        try {
-            ComponentName result = context.startService(serviceIntent);
-            LOGD("startService() result:" + result);
-            return result != null;
-        } catch (Exception ex) {
-            LOGE("Error starting service with intent:" + serviceIntent
-                    + "\n" + ex.getLocalizedMessage(), ex);
-        }
-        return false;
-    }
-
-    /**
-     * Static helper function that enables logs
-     *
-     * @param enabled whether to output logs
-     */
-    public static void enableLogging(boolean enabled) {
-        LOGGING_ENABLED = enabled;
-    }
-
     static void LOGD(String msg) {
         LOGD(msg, null);
     }
@@ -475,6 +425,99 @@ public class LiveWallpaperSource extends IntentService {
         if (LOGGING_ENABLED) {
             Log.e(TAG, msg, throwable);
         }
+    }
+
+    /**
+     * A <a href="http://en.wikipedia.org/wiki/Builder_pattern">builder</a>-style, <a
+     * href="http://en.wikipedia.org/wiki/Fluent_interface">fluent interface</a> for initiating
+     * the API.
+     *
+     * Example of the simplest usage:
+     *
+     * try {
+     *     LiveWallpaperSource.with(mContext)
+     *          .loggingEnabled(false)
+     *          .setBitmapSynchronous(tempBitmap)
+     *          .run();
+     * } catch (OutOfMemoryError outOfMemoryError) {
+     *    ...
+     * } catch (IllegalArgumentException illegalArgumentEx) {
+     *    ...
+     * } catch (IllegalStateException illegalStateException) {
+     *    ...
+     * }
+     *
+     */
+    static public class Builder {
+
+        Context mContext;
+        ActionPalette mActionPalette;
+
+        Builder(Context context) {
+            mContext = context.getApplicationContext();
+        }
+
+        /**
+         * Set the Bitmap, and generate a palette for the supplied Bitmap.
+         * Occurs synchronously, so put inside a thread/AsyncTask.
+         *
+         * @param bitmap The bitmap to process
+         * @return the builder instance
+         */
+        public Builder setBitmapSynchronous(Bitmap bitmap) {
+            mActionPalette = ActionPalette.from(bitmap).generate();
+            return this;
+        }
+
+        /**
+         *
+         * @param colors
+         * @return
+         */
+        /*
+        public Builder setFallbackColors(Set<Integer> colors) {
+            return this;
+        }*/
+
+        /**
+         * Should Log.d() and Log.e() calls be made. Used for debugging.
+         *
+         * @param enabled true if logging is to be enabled (uses the "Action3-api" tag)
+         * @return
+         */
+        public Builder loggingEnabled(boolean enabled) {
+            LOGGING_ENABLED = enabled;
+            return this;
+        }
+
+        /**
+         * Kick off communication with Action Launcher.
+         *
+         * @return true if communication with Action Launcher was initiated, false if not.
+         */
+        public boolean run() {
+            Intent serviceIntent = new Intent(mContext, LiveWallpaperSource.class)
+                    .setAction(ProtocolConstants.ACTION_PUBLISH_STATE)
+                    .putExtra(EXTRA_LIVE_WALLPAPER_INFO, (mActionPalette == null) ? null :
+                            new LiveWallpaperInfo.Builder()
+                                    .palette(mActionPalette)
+                                    .build()
+                                    .toBundle())
+                    .putExtra("dummy", System.currentTimeMillis());
+            try {
+                ComponentName result = mContext.startService(serviceIntent);
+                LOGD("startService() result:" + result);
+                return result != null;
+            } catch (Exception ex) {
+                LOGE("Error starting service with intent:" + serviceIntent
+                        + "\n" + ex.getLocalizedMessage(), ex);
+            }
+            return false;
+        }
+    }
+
+    public static Builder with(Context context) {
+        return new Builder(context);
     }
 
 }

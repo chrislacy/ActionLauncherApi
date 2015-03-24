@@ -343,7 +343,21 @@ public class MuzeiBlurRenderer implements GLSurfaceView.Renderer {
                 rect.set(0, 0, originalWidth, originalHeight);
                 options.inSampleSize = ImageUtil.calculateSampleSize(originalHeight, 64);
                 Bitmap tempBitmap = bitmapRegionLoader.decodeRegion(rect, options);
-                LiveWallpaperSource.setBitmapSynchronous(mContext.getApplicationContext(), tempBitmap);
+                try {
+                    LiveWallpaperSource.with(mContext)
+                            .loggingEnabled(false)
+                            .setBitmapSynchronous(tempBitmap)
+                            .run();
+                } catch (OutOfMemoryError outOfMemoryError) {
+                    // Palette generation was unable to process the Bitmap passed in to
+                    // setBitmapSynchronous(). Consider using a smaller image.
+                    // See ActionPalette.DEFAULT_RESIZE_BITMAP_MAX_DIMENSION
+                } catch (IllegalArgumentException illegalArgumentEx) {
+                    // Raised during palette generation. Check your Bitmap.
+                } catch (IllegalStateException illegalStateException) {
+                    // Raised during palette generation. Check your Bitmap.
+                }
+
                 float darkness = ImageUtil.calculateDarkness(tempBitmap);
                 mDimAmount = mDemoMode
                         ? DEMO_DIM
