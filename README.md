@@ -79,7 +79,7 @@ Notes
 The following Android apps make use of this API:
 
 * [Minima Pro Live Wallpaper](https://play.google.com/store/apps/details?id=com.joko.minimapro)
-
+* [Wallpaper Changer](https://play.google.com/store/apps/details?id=de.j4velin.wallpaperChanger)
 
 
 License
