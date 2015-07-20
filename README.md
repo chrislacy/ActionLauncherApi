@@ -79,7 +79,7 @@ Notes
 The following Android apps make use of this API:
 
 * [Minima Pro Live Wallpaper](https://play.google.com/store/apps/details?id=com.joko.minimapro)
-
+* [TapDeck - Wallpaper Discovery](https://play.google.com/store/apps/details?id=io.tapdeck.android)
 
 
 License
